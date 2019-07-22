@@ -36,3 +36,6 @@ npm-debug.log
 
 #custom
 .idea/
+
+#intellij
+selfme.iml

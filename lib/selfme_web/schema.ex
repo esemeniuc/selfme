@@ -1,6 +1,6 @@
-defmodule Selfme.Schema do
+defmodule SelfmeWeb.Schema do
   use Absinthe.Schema
-  alias Selfme.Resolvers
+  alias SelfmeWeb.Resolvers
 
   query do
     @desc "Get all posts"

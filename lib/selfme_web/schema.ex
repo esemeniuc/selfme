@@ -1,6 +1,7 @@
 defmodule SelfmeWeb.Schema do
   use Absinthe.Schema
   alias SelfmeWeb.Resolvers
+  import_types SelfmeWeb.Schema.ContentTypes
 
   query do
     @desc "Gets the credit count for a user"
@@ -10,7 +11,7 @@ defmodule SelfmeWeb.Schema do
     end
 
     @desc "Gets the experiments for a user"
-    field :get_experiments, non_null(list_of(non_null(:integer))) do
+    field :get_experiments, non_null(list_of(non_null(:experiment))) do
       arg :token, non_null(:string)
       resolve &Resolvers.Content.get_experiments/3
     end

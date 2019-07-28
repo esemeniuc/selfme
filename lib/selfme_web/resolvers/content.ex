@@ -6,16 +6,30 @@ defmodule SelfmeWeb.Resolvers.Content do
     {:ok, 0}
   end
 
-#  @spec get_experiments(any, %{required(string) => string}, any) :: [experiment]
+  #  @spec get_experiments(any, %{required(string) => string}, any) :: [experiment]
   def get_experiments(_parent, args, _resolution) do
     IO.inspect(args)
-    {:ok, [0,1]}
+
+    mock_experiment = %{
+      attractiveness: %{
+        dislikes: 1,
+        mehs: 2,
+        likes: 3,
+      },
+      fun: %{
+        dislikes: 4,
+        mehs: 5,
+        likes: 6,
+      },
+      image_id: "an image id"
+    }
+    {:ok, [mock_experiment]}
   end
 
-#  @spec get_image(any, %{required(string) => string}, any) :: successResponse
-#  #  token, imageid
-#  def get_image(_parent, _args, _resolution) do
-#    {:ok, 0}
-#  end
+  #  @spec get_image(any, %{required(string) => string}, any) :: successResponse
+  #  #  token, imageid
+  #  def get_image(_parent, _args, _resolution) do
+  #    {:ok, 0}
+  #  end
 
 end

@@ -3,15 +3,15 @@ defmodule SelfmeWeb.Schema.ContentTypes do
 
   @desc "An experiment"
   object :experiment do
-    field :attractiveness, :stat_tuple
-    field :fun, :stat_tuple
-    field :image_id, :string
+    field :attractiveness, non_null(:stat_tuple)
+    field :fun, non_null(:stat_tuple)
+    field :image_id, non_null(:string)
   end
 
   @desc "A Tuple of Statistics"
   object :stat_tuple do
-    field :dislikes, :integer
-    field :mehs, :integer
-    field :likes, :integer
+    field :dislikes, non_null(:integer)
+    field :mehs, non_null(:integer)
+    field :likes, non_null(:integer)
   end
 end

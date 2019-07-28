@@ -15,5 +15,4 @@ defmodule SelfmeWeb.Router do
             schema: SelfmeWeb.Schema
 
   end
-
 end

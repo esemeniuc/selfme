@@ -6,7 +6,7 @@ defmodule SelfmeWeb.Resolvers.Content do
     {:ok, 0}
   end
 
-  #  @spec get_experiments(any, %{required(string) => string}, any) :: [experiment]
+  @spec get_experiments(any, %{required(String.t()) => String.t()}, any) :: [SelfmeWeb.Schema.ContentTypes.experiment]
   def get_experiments(_parent, args, _resolution) do
     IO.inspect(args)
 
@@ -26,10 +26,11 @@ defmodule SelfmeWeb.Resolvers.Content do
     {:ok, [mock_experiment]}
   end
 
-  #  @spec get_image(any, %{required(string) => string}, any) :: successResponse
-  #  #  token, imageid
-  #  def get_image(_parent, _args, _resolution) do
-  #    {:ok, 0}
-  #  end
+  @spec get_image(any, %{required(String.t()) => String.t()}, any) :: String.t()
+  def get_image(_parent, %{token: token}, _resolution) do
+    IO.puts(token)
+#    IO.puts(imageId)
+    {:ok, "fakeImageConvertedToString"}
+  end
 
 end

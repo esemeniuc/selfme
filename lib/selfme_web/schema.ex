@@ -16,11 +16,11 @@ defmodule SelfmeWeb.Schema do
       resolve &Resolvers.Content.get_experiments/3
     end
 
-#    @desc "Gets an image for the user to vote on"
-#    field :get_image, :integer do
-#      arg :token, non_null(:string)
-#      resolve &Resolvers.Content.get_image/3
-#    end
+    @desc "Gets an image for the user to vote on"
+    field :get_image, :string do
+      arg :token, non_null(:string)
+      resolve &Resolvers.Content.get_image/3
+    end
 
   end
 

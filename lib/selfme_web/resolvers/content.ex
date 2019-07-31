@@ -6,7 +6,9 @@ defmodule SelfmeWeb.Resolvers.Content do
     {:ok, 0}
   end
 
-  @spec get_experiments(any, %{required(String.t()) => String.t()}, any) :: [SelfmeWeb.Schema.ContentTypes.experiment]
+  import_types SelfmeWeb.Schema.ContentTypes.experiment
+
+  @spec get_experiments(any, %{required(String.t()) => String.t()}, any) :: [experiment]
   def get_experiments(_parent, args, _resolution) do
     IO.inspect(args)
 

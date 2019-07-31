@@ -26,10 +26,10 @@ defmodule SelfmeWeb.Resolvers.Content do
     {:ok, [mock_experiment]}
   end
 
-  @spec get_image(any, %{required(String.t()) => String.t()}, %{required(String.t()) => String.t()}, any) :: String.t()
-  def get_image(_parent, %{token: token}, %{imageId: imageId}, _resolution) do
+  @spec get_image(any, %{required(String.t()) => String.t()}, any) :: String.t()
+  def get_image(_parent, %{token: token, image_id: image_id}, _resolution) do
     IO.puts(token)
-    IO.puts(imageId)
+    IO.puts(image_id)
     {:ok, "fakeImageConvertedToString"}
   end
 

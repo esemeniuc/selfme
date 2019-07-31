@@ -1,4 +1,5 @@
 defmodule SelfmeWeb.Resolvers.Content do
+import SelfmeWeb.Schema.ContentTypes
 
   @spec get_credits(any, %{required(String.t()) => String.t()}, any) :: integer
   def get_credits(_parent, %{token: token}, _resolution) do
@@ -6,9 +7,7 @@ defmodule SelfmeWeb.Resolvers.Content do
     {:ok, 0}
   end
 
-  import_types SelfmeWeb.Schema.ContentTypes.experiment
-
-  @spec get_experiments(any, %{required(String.t()) => String.t()}, any) :: [experiment]
+  @spec get_experiments(any, %{required(String.t()) => String.t()}, any) :: [:experiment]
   def get_experiments(_parent, args, _resolution) do
     IO.inspect(args)
 

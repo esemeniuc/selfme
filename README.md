@@ -16,6 +16,15 @@ To start your Phoenix server:
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
+API Interfaces
+api/
+queries
+
+mutation
+uploadImage
+
+curl -X POST -F query="mutation { uploadImage(token: \"poken\", image: \"image\")}" -F image=@/Users/kaiwen.zhang/Downloads/watch.html localhost:4000/api
+
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
 ## Learn more

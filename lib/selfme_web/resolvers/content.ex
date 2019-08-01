@@ -34,6 +34,7 @@ defmodule SelfmeWeb.Resolvers.Content do
     {:ok, "fakeImageConvertedToString"}
   end
 
+#  @spec upload_image(any, %{required(String.t()) => String.t()}, any) :: String.t()
   def upload_image(_parent, args, _resolution) do
     IO.puts(args.token)
     IO.inspect(args.image)

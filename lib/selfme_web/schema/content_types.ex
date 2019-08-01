@@ -14,4 +14,7 @@ defmodule SelfmeWeb.Schema.ContentTypes do
     field :mehs, non_null(:integer)
     field :likes, non_null(:integer)
   end
+
+  @desc "A Rating on an Image"
+  enum :rating, values: [:like, :meh, :dislike]
 end

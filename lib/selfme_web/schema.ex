@@ -33,6 +33,14 @@ defmodule SelfmeWeb.Schema do
       resolve &Resolvers.Content.upload_image/3
     end
 
+    @desc "Vote on a User Image"
+    field :vote, :integer do
+      arg :token, non_null(:string)
+      arg :image_id, non_null(:string)
+      arg :attractiveness, non_null(:rating)
+      arg :fun, non_null(:rating)
+      resolve &Resolvers.Content.vote/3
+    end
   end
 
 end

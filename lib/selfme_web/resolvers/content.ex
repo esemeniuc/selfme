@@ -43,4 +43,13 @@ defmodule SelfmeWeb.Resolvers.Content do
     IO.puts(contents)
     {:ok, "someimageid"}
   end
+
+#  @spec vote(any, %{required(:token) => String.t(), required(:image) =>  Plug.Upload}, any) :: String.t()
+  def vote(_parent, %{token: token, image_id: image_id, attractiveness: attractiveness, fun: fun}, _resolution) do
+    IO.puts(token)
+    IO.puts(image_id)
+    IO.puts(attractiveness)
+    IO.puts(fun)
+    {:ok, 99}
+  end
 end

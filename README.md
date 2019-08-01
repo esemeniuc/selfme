@@ -25,6 +25,13 @@ uploadImage
 
 curl -X POST -F query="mutation { uploadImage(token: \"poken\", image: \"image\")}" -F image=@/Users/kaiwen.zhang/Downloads/watch.html localhost:4000/api
 
+voteAndGetCreditBalance{
+  vote(token:"poken",
+  imageId: "someimage.jpg",
+  attractiveness: LIKE,
+  fun: DISLIKE)
+}
+
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
 ## Learn more

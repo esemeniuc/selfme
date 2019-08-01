@@ -1,5 +1,5 @@
 defmodule SelfmeWeb.Resolvers.Content do
-import SelfmeWeb.Schema.ContentTypes
+  import SelfmeWeb.Schema.ContentTypes
 
   @spec get_credits(any, %{required(String.t()) => String.t()}, any) :: integer
   def get_credits(_parent, %{token: token}, _resolution) do
@@ -34,4 +34,9 @@ import SelfmeWeb.Schema.ContentTypes
     {:ok, "fakeImageConvertedToString"}
   end
 
+  def upload_image(_parent, args, _resolution) do
+    IO.puts(args.token)
+    IO.inspect(args.image)
+    {:ok, "someimageid"}
+  end
 end

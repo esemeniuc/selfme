@@ -1,7 +1,8 @@
 defmodule SelfmeWeb.Schema do
   use Absinthe.Schema
   alias SelfmeWeb.Resolvers
-  import_types SelfmeWeb.Schema.ContentTypes
+  import_types SelfmeWeb.Schema.ContentTypes #for :experiment type
+  import_types Absinthe.Plug.Types  # for :upload` type
 
   query do
     @desc "Gets the credit count for a user"
@@ -22,7 +23,15 @@ defmodule SelfmeWeb.Schema do
       arg :image_id, non_null(:string)
       resolve &Resolvers.Content.get_image/3
     end
+  end
 
+  mutation do
+    @desc "Gets an image for the user to vote on"
+    field :upload_image, :string do
+      arg :token, non_null(:string)
+      arg :image, non_null(:upload)
+      resolve &Resolvers.Content.upload_image/3
+    end
   end
 
 end

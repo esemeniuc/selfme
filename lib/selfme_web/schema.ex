@@ -32,6 +32,7 @@ defmodule SelfmeWeb.Schema do
       arg :image, non_null(:upload)
       resolve &Resolvers.Content.upload_image/3
     end
+
   end
 
 end

@@ -44,3 +44,8 @@ To connect a database
 To show schemas
 `\d`
 
+Set up your migration 
+`mix ecto.migrate`
+
+After git fetch 
+`mix ecto.reset`

@@ -16,5 +16,6 @@ defmodule Selfme.User do
     user
     |> cast(attrs, [:email, :pass, :token, :credits])
     |> validate_required([:email, :pass, :token, :credits])
+    |> unique_constraint(:email)
   end
 end

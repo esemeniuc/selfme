@@ -11,7 +11,7 @@ defmodule Selfme.Repo.Migrations.CreateUsers do
       timestamps()
     end
 
-    create index(:users, :email, unique: true)
+    create unique_index(:users, [:email])
 
   end
 end

@@ -56,3 +56,4 @@ After git fetch
 mix phx.gen.schema Vote votes image_id:references:images user_id:references:users attractiveness:rating fun:rating
 mix phx.gen.schema Experiment experiments image_id:references:images user_id:references:users
 ```
+ADD fkey for votes, add not null constraint

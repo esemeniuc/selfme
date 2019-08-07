@@ -3,7 +3,7 @@ defmodule Selfme.Vote do
   import Ecto.Changeset
 
   schema "votes" do
-    field :image_id, :id
+    field :experiment_id, :id
     field :user_id, :id
     field :attractiveness, Rating
     field :fun, Rating

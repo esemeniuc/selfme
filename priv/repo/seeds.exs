@@ -10,12 +10,17 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 
+userA = Selfme.Repo.insert!(%Selfme.User{credits: 10, email: "alice@a.com", pass: "secret", token: "poken1"})
+userB = Selfme.Repo.insert!(%Selfme.User{credits: 5, email: "bob@b.com", pass: "secret", token: "poken2"})
 
-image = %Selfme.Image{payload: "asdafads"}
-image = Selfme.Repo.insert!(image)
+experiment1userA = Selfme.Repo.insert!(%Selfme.Experiment{user_id: userA.id, payload: "ALICEIMG1"})
+experiment2userA = Selfme.Repo.insert!(%Selfme.Experiment{user_id: userA.id, payload: "ALICEIMG2"})
+experiment1userB = Selfme.Repo.insert!(%Selfme.Experiment{user_id: userB.id, payload: "BOBIMG1"})
 
-user = %Selfme.User{credits: 1, email: "aaa@a.com", pass: "secret", token: "poken"}
-user = Selfme.Repo.insert!(user)
+aliceVotesOnBob = Selfme.Repo.insert!(
+  %Selfme.Vote{experiment_id: experiment1userB.id, user_id: userA.id, attractiveness: :like, fun: :meh}
+)
 
-vote = %Selfme.Vote{image_id: image.id, user_id: user.id, attractiveness: :like, fun: :meh}
-Selfme.Repo.insert!(vote)
+bobVotesOnAlice = Selfme.Repo.insert!(
+  %Selfme.Vote{experiment_id: experiment1userA.id, user_id: userB.id, attractiveness: :dislike, fun: :like}
+)

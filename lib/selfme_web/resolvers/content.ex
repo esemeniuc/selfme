@@ -22,15 +22,15 @@ defmodule SelfmeWeb.Resolvers.Content do
         mehs: 5,
         likes: 6,
       },
-      image_id: "an image id"
+      payload: "an image"
     }
     {:ok, [mock_experiment]}
   end
 
   @spec get_image(any, %{required(String.t()) => String.t()}, any) :: String.t()
-  def get_image(_parent, %{token: token, image_id: image_id}, _resolution) do
+  def get_image(_parent, %{token: token, experiment_id: experiment_id}, _resolution) do
     IO.puts(token)
-    IO.puts(image_id)
+    IO.puts(experiment_id)
     {:ok, "fakeImageConvertedToString"}
   end
 

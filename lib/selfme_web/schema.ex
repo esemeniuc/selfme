@@ -20,7 +20,7 @@ defmodule SelfmeWeb.Schema do
     @desc "Gets an image for the user to vote on"
     field :get_image, :string do
       arg :token, non_null(:string)
-      arg :image_id, non_null(:string)
+      arg :experiment_id, non_null(:string)
       resolve &Resolvers.Content.get_image/3
     end
   end
@@ -36,7 +36,7 @@ defmodule SelfmeWeb.Schema do
     @desc "Vote on a User Image"
     field :vote, :integer do
       arg :token, non_null(:string)
-      arg :image_id, non_null(:string)
+      arg :experiment_id, non_null(:string)
       arg :attractiveness, non_null(:rating)
       arg :fun, non_null(:rating)
       resolve &Resolvers.Content.vote/3

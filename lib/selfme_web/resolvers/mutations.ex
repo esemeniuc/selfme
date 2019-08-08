@@ -28,3 +28,4 @@ defmodule SelfmeWeb.Resolvers.Mutations do
     IO.puts(fun)
     {:ok, 95}
   end
+end

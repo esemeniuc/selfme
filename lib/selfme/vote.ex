@@ -14,7 +14,7 @@ defmodule Selfme.Vote do
   @doc false
   def changeset(vote, attrs) do
     vote
-    |> cast(attrs, []) #TODO add requirements
-    |> validate_required([])
+    |> cast(attrs, [:experiment_id, :user_id, :attractiveness, :fun])
+    |> validate_required([:experiment_id, :user_id, :attractiveness, :fun])
   end
 end

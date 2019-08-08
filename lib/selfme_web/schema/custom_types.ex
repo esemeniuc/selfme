@@ -1,4 +1,4 @@
-defmodule SelfmeWeb.Schema.ContentTypes do
+defmodule SelfmeWeb.Schema.CustomTypes do
   use Absinthe.Schema.Notation
 
   @desc "An experiment"

@@ -19,8 +19,8 @@ defmodule SelfmeWeb.Schema do
 
     @desc "Gets an image for the user to vote on"
     field :get_image, :string do
-      arg :token, non_null(:string)
       arg :experiment_id, non_null(:string)
+      arg :token, non_null(:string)
       resolve &Resolvers.Queries.get_image/3
     end
   end

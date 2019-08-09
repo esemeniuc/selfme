@@ -1,4 +1,4 @@
-defmodule SelfmeWeb.SchemaIntegrationTest do
+defmodule SelfmeWeb.QueryIntegrationTest do
   @moduledoc false
   use SelfmeWeb.ConnCase, async: true
 
@@ -72,5 +72,29 @@ defmodule SelfmeWeb.SchemaIntegrationTest do
                """
              )
     end
+
+    test "gets the image for an experiment owned by a user with $token" do
+      getImages = """
+      query($experimentId: String!, $token: String!){
+      getImage(experimentId: $experimentId, token: $token)
+      }
+      """
+      variables = %{experimentId: "magic", token: "poken"}
+
+      response =
+        build_conn()
+        |> post("/api", %{query: getImages, variables: variables})
+
+      assert json_response(response, 200) == Jason.decode!(
+               """
+               {
+               "data": {
+               "getImage": "fakeImageConvertedToString"
+               }
+               }
+               """
+             )
+    end
+
   end
 end

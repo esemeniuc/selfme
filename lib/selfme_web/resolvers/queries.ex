@@ -28,9 +28,9 @@ defmodule SelfmeWeb.Resolvers.Queries do
   end
 
   @spec get_image(any, %{required(String.t()) => String.t()}, any) :: String.t()
-  def get_image(_parent, %{token: token, experiment_id: experiment_id}, _resolution) do
-    IO.puts(token)
+  def get_image(_parent, %{experiment_id: experiment_id, token: token}, _resolution) do
     IO.puts(experiment_id)
+    IO.puts(token)
     {:ok, "fakeImageConvertedToString"}
   end
 end

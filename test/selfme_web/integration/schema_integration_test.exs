@@ -25,5 +25,52 @@ defmodule SelfmeWeb.SchemaIntegrationTest do
                """
              )
     end
+
+    test "gets the experiments for a user" do
+      getExperiments = """
+      query($token: String!) {
+        getExperiments(token: $token){
+          attractiveness{
+            dislikes
+            likes
+            mehs
+          }
+          fun{
+            dislikes
+            likes
+            mehs
+          }
+        }
+      }
+      """
+      variables = %{token: "poken"}
+
+      response =
+        build_conn()
+        |> post("/api", %{query: getExperiments, variables: variables})
+
+      assert json_response(response, 200) == Jason.decode!(
+               """
+               {
+               "data": {
+               "getExperiments": [
+               {
+               "attractiveness": {
+               "dislikes": 1,
+               "likes": 3,
+               "mehs": 2
+               },
+               "fun": {
+               "dislikes": 4,
+               "likes": 6,
+               "mehs": 5
+               }
+               }
+               ]
+               }
+               }
+               """
+             )
+    end
   end
 end

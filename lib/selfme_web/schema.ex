@@ -26,7 +26,7 @@ defmodule SelfmeWeb.Schema do
   end
 
   mutation do
-    @desc "Gets an image for the user to vote on"
+    @desc "Uploads an image for an experiment"
     field :upload_image, :string do
       arg :token, non_null(:string)
       arg :image, non_null(:upload)

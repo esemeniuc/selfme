@@ -27,6 +27,42 @@ defmodule SelfmeWeb.MutationIntegrationTest do
                }
              }
     end
+
+    #    @desc "Vote on a User Image"
+    #    field :vote, :integer do
+    #      arg :token, non_null(:string)
+    #      arg :experiment_id, non_null(:string)
+    #      arg :attractiveness, non_null(:rating)
+    #      arg :fun, non_null(:rating)
+    #      resolve &Resolvers.Mutations.vote/3
+    #    end
+    test "work with voting on a experiment" do
+      voteMutation = """
+      mutation($experimentId: String!, $token: String!, $attractiveness: Rating!, $fun: Rating!) {
+      vote(experimentId: $experimentId,
+      token: $token,
+      attractiveness: $attractiveness,
+      fun: $fun)
+      }
+      """
+
+      variables = %{
+        experimentId: "asdf5",
+        token: "poken",
+        attractiveness: "LIKE",
+        fun: "MEH"
+      }
+
+      response =
+        build_conn()
+        |> post("/api", %{:query => voteMutation, :variables => variables})
+
+      assert json_response(response, 200) == %{
+               "data" => %{
+                 "vote" => 95
+               }
+             }
+    end
   end
 
 end

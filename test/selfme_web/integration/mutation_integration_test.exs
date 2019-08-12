@@ -3,40 +3,30 @@ defmodule SelfmeWeb.MutationIntegrationTest do
   use SelfmeWeb.ConnCase, async: true
 
   describe "mutations" do
-    #    setup [:basic_opts]
-    @query"""
-    mutation() {
-    uploadImage(image: "file_data_attribute_arbitraty_name", token: "POKEN")
-    }
-    """
-
     test "work with a valid required upload" do
+      uploadImageMutation = """
+      mutation($token: String!) {
+      uploadImage(image: "upload_fixture.txt", token: $token)
+      }
+      """
       upload = %Plug.Upload{
-        content_type: "text/csv",
-        filename: "users.csv",
-        path: Path.expand("../../Downloads/output.xml", __DIR__)
+        content_type: "application/octet-stream",
+        filename: "upload_fixture.txt",
+        path: Path.expand("upload_fixture.txt", __DIR__)
       }
 
-      resp =
-        conn
-        |> post("/api", %{"query" => @query, "file_data_attribute_arbitraty_name" => upload})
+      variables = %{token: "poken"}
 
-      decode_response = response(resp, 200)
+      response =
+        build_conn()
+        |> post("/api", %{:query => uploadImageMutation, :variables => variables, "upload_fixture.txt" => upload})
 
-      #      assert %{status: 200, resp_body: resp_body} =
-      #               conn(:post, "/", %{"query" => query, "a" => upload})
-      #               |> put_req_header("content-type", "multipart/form-data")
-      #               |> call(opts)
-      #
-      #      assert resp_body == %{
-      #               "data" => %{
-      #                 "uploadImage" => "someimageid"
-      #               }
-      #             }
+      assert json_response(response, 200) == %{
+               "data" => %{
+                 "uploadImage" => "someimageid"
+               }
+             }
     end
   end
 
-  #  defp basic_opts(context) do
-  #    Map.put(context, :opts, Absinthe.Plug.init(schema: TestSchema))
-  #  end
 end

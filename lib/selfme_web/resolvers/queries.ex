@@ -3,13 +3,13 @@ defmodule SelfmeWeb.Resolvers.Queries do
 
   @spec get_credits(any, %{required(String.t()) => String.t()}, any) :: integer
   def get_credits(_parent, %{token: token}, _resolution) do
-    IO.puts(token)
+#    IO.puts(token)
     {:ok, 0}
   end
 
   @spec get_experiments(any, %{required(String.t()) => String.t()}, any) :: [:experiment]
   def get_experiments(_parent, args, _resolution) do
-    IO.inspect(args)
+#    IO.inspect(args)
 
     mock_experiment = %{
       attractiveness: %{
@@ -29,8 +29,8 @@ defmodule SelfmeWeb.Resolvers.Queries do
 
   @spec get_image(any, %{required(String.t()) => String.t()}, any) :: String.t()
   def get_image(_parent, %{experiment_id: experiment_id, token: token}, _resolution) do
-    IO.puts(experiment_id)
-    IO.puts(token)
+#    IO.puts(experiment_id)
+#    IO.puts(token)
     {:ok, "fakeImageConvertedToString"}
   end
 end

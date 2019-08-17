@@ -3,13 +3,13 @@ defmodule SelfmeWeb.QueryIntegrationTest do
   use SelfmeWeb.ConnCase, async: true
 
   describe "queries" do
-    test "gets the credits for a user with $token" do
+    test "gets the credits for a user with valid token" do
       getCredits = """
       query($token: String!){
       getCredits(token: $token)
       }
       """
-      variables = %{token: "poken"}
+      variables = %{token: "poken1"}
 
       response =
         build_conn()
@@ -19,7 +19,30 @@ defmodule SelfmeWeb.QueryIntegrationTest do
                """
                {
                  "data": {
-                   "getCredits": 0
+                   "getCredits": 10
+                 }
+               }
+               """
+             )
+    end
+
+    test "gets nil for a user with invalid token" do
+      getCredits = """
+      query($token: String!){
+      getCredits(token: $token)
+      }
+      """
+      variables = %{token: "bad"}
+
+      response =
+        build_conn()
+        |> post("/api", %{query: getCredits, variables: variables})
+
+      assert json_response(response, 200) == Jason.decode!(
+               """
+               {
+                 "data": {
+                   "getCredits": null
                  }
                }
                """

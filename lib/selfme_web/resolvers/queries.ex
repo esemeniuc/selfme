@@ -1,16 +1,16 @@
 defmodule SelfmeWeb.Resolvers.Queries do
   import SelfmeWeb.Schema.CustomTypes
+  import Ecto.Query
 
   @spec get_credits(any, %{required(String.t()) => String.t()}, any) :: integer
   def get_credits(_parent, %{token: token}, _resolution) do
-#    IO.puts(token)
-    {:ok, 0}
+    credits = Selfme.Repo.one(from u in Selfme.User, select: u.credits, where: u.token == ^token)
+    {:ok, credits}
   end
 
   @spec get_experiments(any, %{required(String.t()) => String.t()}, any) :: [:experiment]
   def get_experiments(_parent, args, _resolution) do
-#    IO.inspect(args)
-
+    #    IO.inspect(args)
     mock_experiment = %{
       attractiveness: %{
         dislikes: 1,
@@ -29,8 +29,8 @@ defmodule SelfmeWeb.Resolvers.Queries do
 
   @spec get_image(any, %{required(String.t()) => String.t()}, any) :: String.t()
   def get_image(_parent, %{experiment_id: experiment_id, token: token}, _resolution) do
-#    IO.puts(experiment_id)
-#    IO.puts(token)
+    #    IO.puts(experiment_id)
+    #    IO.puts(token)
     {:ok, "fakeImageConvertedToString"}
   end
 end

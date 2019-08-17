@@ -9,8 +9,31 @@ defmodule SelfmeWeb.Resolvers.Queries do
   end
 
   @spec get_experiments(any, %{required(String.t()) => String.t()}, any) :: [:experiment]
-  def get_experiments(_parent, args, _resolution) do
-    #    IO.inspect(args)
+  def get_experiments(_parent, %{token: token}, _resolution) do
+    attractiveness_rows = Selfme.Repo.all(
+      from e in Selfme.Experiment,
+      #for token validation
+      join: u in Selfme.User,
+      on: u.id == e.user_id,
+        #for getting stats
+      join: v in Selfme.Vote,
+      on: v.experiment_id == e.id,
+      where: u.token == ^token,
+      group_by: v.attractiveness,
+      select: %{
+        rating_type: v.attractiveness,
+        count: count(v.id)
+      },
+      order_by: [
+        desc: v.attractiveness
+      ]
+    )
+
+    #returns %{like: [2], meh: [1]}
+    #missing rating means 0
+    attractiveness_data = Enum.group_by(attractiveness_rows, fn (row) -> row.rating_type end, fn (row) -> row.count end)
+#Enum.at(b.meh, 0, 0)
+    #Map.get(b, :dislike, [0])
     mock_experiment = %{
       attractiveness: %{
         dislikes: 1,

@@ -28,14 +28,6 @@ defmodule SelfmeWeb.MutationIntegrationTest do
              }
     end
 
-    #    @desc "Vote on a User Image"
-    #    field :vote, :integer do
-    #      arg :token, non_null(:string)
-    #      arg :experiment_id, non_null(:string)
-    #      arg :attractiveness, non_null(:rating)
-    #      arg :fun, non_null(:rating)
-    #      resolve &Resolvers.Mutations.vote/3
-    #    end
     test "work with voting on a experiment" do
       voteMutation = """
       mutation($experimentId: String!, $token: String!, $attractiveness: Rating!, $fun: Rating!) {

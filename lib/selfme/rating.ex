@@ -7,7 +7,7 @@ defmodule Rating do
     case rating do
       1 -> {:ok, :like}
       0 -> {:ok, :meh}
-      -1 -> {:ok, :disklike}
+      -1 -> {:ok, :dislike}
     end
   end
   # Everything else is a failure though

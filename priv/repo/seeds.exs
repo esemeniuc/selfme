@@ -18,17 +18,26 @@ userD = Selfme.Repo.insert!(%Selfme.User{credits: 7, email: "doug@d.com", pass: 
 experiment1userA = Selfme.Repo.insert!(%Selfme.Experiment{user_id: userA.id, payload: "ALICEIMG1"})
 experiment2userA = Selfme.Repo.insert!(%Selfme.Experiment{user_id: userA.id, payload: "ALICEIMG2"})
 experiment1userB = Selfme.Repo.insert!(%Selfme.Experiment{user_id: userB.id, payload: "BOBIMG1"})
+experiment2userB = Selfme.Repo.insert!(%Selfme.Experiment{user_id: userB.id, payload: "BOBIMG2"})
 
-aliceVotesOnBob = Selfme.Repo.insert!(
+aliceVotesOnBob1 = Selfme.Repo.insert!(
   %Selfme.Vote{experiment_id: experiment1userB.id, user_id: userA.id, attractiveness: :like, fun: :like}
 )
 
-charlieVotesOnBob = Selfme.Repo.insert!(
+charlieVotesOnBob1 = Selfme.Repo.insert!(
   %Selfme.Vote{experiment_id: experiment1userB.id, user_id: userC.id, attractiveness: :like, fun: :dislike}
 )
 
-dougVotesOnBob = Selfme.Repo.insert!(
+dougVotesOnBob1 = Selfme.Repo.insert!(
   %Selfme.Vote{experiment_id: experiment1userB.id, user_id: userD.id, attractiveness: :meh, fun: :meh}
+)
+
+aliceVotesOnBob2 = Selfme.Repo.insert!(
+  %Selfme.Vote{experiment_id: experiment2userB.id, user_id: userA.id, attractiveness: :dislike, fun: :like}
+)
+
+charlieVotesOnBob2 = Selfme.Repo.insert!(
+  %Selfme.Vote{experiment_id: experiment2userB.id, user_id: userC.id, attractiveness: :dislike, fun: :dislike}
 )
 
 bobVotesOnAlice = Selfme.Repo.insert!(

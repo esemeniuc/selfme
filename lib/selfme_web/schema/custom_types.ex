@@ -3,6 +3,7 @@ defmodule SelfmeWeb.Schema.CustomTypes do
 
   @desc "An experiment"
   object :experiment do
+    field :experiment_id, non_null(:id)
     field :attractiveness, non_null(:stat_tuple)
     field :fun, non_null(:stat_tuple)
     field :image_id, non_null(:string)

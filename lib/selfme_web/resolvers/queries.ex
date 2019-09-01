@@ -8,41 +8,38 @@ defmodule SelfmeWeb.Resolvers.Queries do
     {:ok, credits}
   end
 
+  #returns experiment_id -> rating count
+  # %{
+  #  3 => %{dislikes: 0, experiment_id: 3, likes: 2, mehs: 1},
+  #  4 => %{dislikes: 2, experiment_id: 4, likes: 0, mehs: 0}
+  #}
+  def get_experiments_helper(query_result) do
+    get_scalar = fn (map, key) -> List.first(Map.get(map, key, [0])) end
+    query_result
+    |> Enum.group_by(fn (row) -> row.experiment_id end, fn (row) -> row end) #group by experiment
+    |> Enum.map(
+         #group by rating
+         fn ({experiment_id, list_of_grouped_ratings}) ->
+           grouped_ratings = Enum.group_by(
+             list_of_grouped_ratings,
+             fn (row) -> row.rating_type end,
+             fn (row) -> row.count end
+           )
+           {
+             experiment_id,
+             %{
+               likes: get_scalar.(grouped_ratings, :like),
+               mehs: get_scalar.(grouped_ratings, :meh),
+               dislikes: get_scalar.(grouped_ratings, :dislike),
+             }
+           }
+         end
+       )
+    |> Enum.into(%{}) #make back into map
+  end
+
   @spec get_experiments(any, %{required(String.t()) => String.t()}, any) :: [:experiment]
   def get_experiments(_parent, %{token: token}, _resolution) do
-    defmodule Test do
-      def get_experiments_helper(query_result) do
-        get_scalar = fn (map, key) -> List.first(Map.get(map, key, [0])) end
-        query_result
-        |> Enum.group_by(fn (row) -> row.experiment_id end, fn (row) -> row end) #group by experiment
-        |> Enum.map(
-             #group by rating
-             fn ({experiment_id, list_of_grouped_ratings}) ->
-               {
-                 experiment_id,
-                 Enum.group_by(
-                   list_of_grouped_ratings,
-                   fn (row) -> row.rating_type end,
-                   fn (row) -> row.count end
-                 )
-               }
-             end
-           )
-        |> Enum.into(%{}) #make back into map
-        |> Map.to_list
-        |> Enum.map(
-             #flatten into list
-             fn ({experiment_id, ratings}) -> %{
-                                                experiment_id: experiment_id,
-                                                likes: get_scalar.(ratings, :like),
-                                                mehs: get_scalar.(ratings, :meh),
-                                                dislikes: get_scalar.(ratings, :dislike),
-                                              }
-             end
-           )
-      end
-    end
-
     attractiveness_query = Selfme.Repo.all(
       from e in Selfme.Experiment,
       #for token validation
@@ -81,23 +78,26 @@ defmodule SelfmeWeb.Resolvers.Queries do
         desc: v.fun
       ]
     )
+    query_out = Map.merge(
+                  get_experiments_helper(attractiveness_query),
+                  get_experiments_helper(fun_query),
+                  fn _experiment_id, attractiveness, fun ->
+                    %{attractiveness: attractiveness, fun: fun}
+                  end
+                )
+                |> Map.to_list
+                |> Enum.map(
+                     fn {experiment_id, attractiveness_fun_stat_tuple} ->
+                       %{
+                         experiment_id: experiment_id,
+                         attractiveness: attractiveness_fun_stat_tuple.attractiveness,
+                         fun: attractiveness_fun_stat_tuple.fun,
+                         imageId: "this is an image"
+                       }
+                     end
+                   )
 
-    Test.get_experiments_helper(attractiveness_query)
-    Test.get_experiments_helper(fun_query)
-    query_out = %{
-      #      attractiveness: %{
-      #        likes: List.first(Map.get(attractiveness_data, :like, [0])),
-      #        mehs: List.first(Map.get(attractiveness_data, :meh, [0])),
-      #        dislikes: List.first(Map.get(attractiveness_data, :dislike, [0])),
-      #      },
-      #      fun: %{
-      #        likes: List.first(Map.get(fun_data, :like, [0])),
-      #        mehs: List.first(Map.get(fun_data, :meh, [0])),
-      #        dislikes: List.first(Map.get(fun_data, :dislike, [0])),
-      #      },
-      #      payload: "an image"
-    }
-    {:ok, [query_out]}
+    {:ok, query_out}
   end
 
   @spec get_image(any, %{required(String.t()) => String.t()}, any) :: String.t()

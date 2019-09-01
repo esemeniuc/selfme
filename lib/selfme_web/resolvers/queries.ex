@@ -102,53 +102,13 @@ defmodule SelfmeWeb.Resolvers.Queries do
 
   @spec get_image(any, %{required(String.t()) => String.t()}, any) :: String.t()
   def get_image(_parent, %{experiment_id: experiment_id, token: token}, _resolution) do
-    #    IO.puts(experiment_id)
-    #    IO.puts(token)
-    {:ok, "fakeImageConvertedToString"}
-  end
-end
-
-"""
-  import Ecto.Query
-  token = "poken2" #for bob
-     attractiveness_rows = Selfme.Repo.all(
+    image = Selfme.Repo.one(
       from e in Selfme.Experiment,
-      #for token validation
       join: u in Selfme.User,
       on: u.id == e.user_id,
-        #for getting stats
-      join: v in Selfme.Vote,
-      on: v.experiment_id == e.id,
-      where: u.token == ^token,
-      group_by: [v.attractiveness, e.id],
-      select: %{
-        experiment_id: e.id,
-        rating_type: v.attractiveness,
-        count: count(v.id)
-      },
-      order_by: [
-        desc: v.attractiveness
-      ]
+      where: u.token == ^token and e.id == ^experiment_id,
+      select: e.payload
     )
-      attractiveness_data = Enum.group_by(attractiveness_rows, fn (row) -> row.experiment_id end, fn (row) -> row end)
- a = %{
-  3 => [
-    %{count: 2, experiment_id: 3, rating_type: :like},
-    %{count: 1, experiment_id: 3, rating_type: :meh}
-  ],
-  4 => [%{count: 2, experiment_id: 4, rating_type: :dislike}]
-}
-a |> Enum.map(fn ({experiment_id, list_of_grouped_ratings}) -> {experiment_id, Enum.group_by(list_of_grouped_ratings, fn(row) -> row.rating_type end, fn(row) -> row.count end)} end) |> Enum.into(%{})
-b = %{3 => %{like: [2], meh: [1]}, 4 => %{dislike: [2]}}
-  get_scalar = fn (map, key) -> List.first(Map.get(map, key, [0])) end
- c = Enum.map(Map.to_list(b), fn({experiment_id, ratings}) -> %{
-        experiment_id: experiment_id,
-        likes: get_scalar.(ratings, :like),
-        mehs: get_scalar.(ratings,:meh),
-        dislikes: get_scalar.(ratings,:dislike),
-  } end)
-
-#wish
-  #[%{experiment_id: 3, dislike: 2, like: 2, meh: 1}] #temporary form
-
-"""
+    {:ok, image}
+  end
+end

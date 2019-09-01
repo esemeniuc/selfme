@@ -26,19 +26,19 @@ defmodule SelfmeWeb.Schema do
   end
 
   mutation do
-    @desc "Uploads an image for an experiment"
-    field :upload_image, :string do
-      arg :token, non_null(:string)
+    @desc "Creates a new experiment for user with token"
+    field :create_experiment, :string do
       arg :image, non_null(:upload)
-      resolve &Resolvers.Mutations.upload_image/3
+      arg :token, non_null(:string)
+      resolve &Resolvers.Mutations.create_experiment/3
     end
 
     @desc "Vote on a User Image"
     field :vote, :integer do
-      arg :token, non_null(:string)
       arg :experiment_id, non_null(:string)
       arg :attractiveness, non_null(:rating)
       arg :fun, non_null(:rating)
+      arg :token, non_null(:string)
       resolve &Resolvers.Mutations.vote/3
     end
   end

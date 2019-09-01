@@ -3,10 +3,10 @@ defmodule SelfmeWeb.MutationIntegrationTest do
   use SelfmeWeb.ConnCase, async: true
 
   describe "mutations" do
-    test "work with a valid required upload" do
-      uploadImageMutation = """
+    test "create a new experiment" do
+      createExperimentMutation = """
       mutation($token: String!) {
-      uploadImage(image: "upload_fixture.txt", token: $token)
+      createExperiment(image: "upload_fixture.txt", token: $token)
       }
       """
       upload = %Plug.Upload{
@@ -19,11 +19,11 @@ defmodule SelfmeWeb.MutationIntegrationTest do
 
       response =
         build_conn()
-        |> post("/api", %{:query => uploadImageMutation, :variables => variables, "upload_fixture.txt" => upload})
+        |> post("/api", %{:query => createExperimentMutation, :variables => variables, "upload_fixture.txt" => upload})
 
       assert json_response(response, 200) == %{
                "data" => %{
-                 "uploadImage" => "someimageid"
+                 "createExperiment" => "someimageid"
                }
              }
     end

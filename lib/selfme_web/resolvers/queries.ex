@@ -100,7 +100,7 @@ defmodule SelfmeWeb.Resolvers.Queries do
     {:ok, query_out}
   end
 
-  @spec get_image(any, %{required(String.t()) => String.t()}, any) :: String.t()
+  @spec get_image(any, %{required(:token) => String.t(), required(:experiment_id) => :id}, any) :: String.t()
   def get_image(_parent, %{experiment_id: experiment_id, token: token}, _resolution) do
     image = Selfme.Repo.one(
       from e in Selfme.Experiment,

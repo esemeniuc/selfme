@@ -15,7 +15,7 @@ defmodule SelfmeWeb.MutationIntegrationTest do
         path: Path.expand("upload_fixture.txt", __DIR__)
       }
 
-      variables = %{token: "poken"}
+      variables = %{token: "poken1"}
 
       response =
         build_conn()
@@ -30,7 +30,7 @@ defmodule SelfmeWeb.MutationIntegrationTest do
 
     test "work with voting on a experiment" do
       voteMutation = """
-      mutation($experimentId: String!, $token: String!, $attractiveness: Rating!, $fun: Rating!) {
+      mutation($experimentId: ID!, $token: String!, $attractiveness: Rating!, $fun: Rating!) {
       vote(experimentId: $experimentId,
       token: $token,
       attractiveness: $attractiveness,
@@ -39,8 +39,8 @@ defmodule SelfmeWeb.MutationIntegrationTest do
       """
 
       variables = %{
-        experimentId: "asdf5",
-        token: "poken",
+        experimentId: 1,
+        token: "poken4",
         attractiveness: "LIKE",
         fun: "MEH"
       }
@@ -51,7 +51,7 @@ defmodule SelfmeWeb.MutationIntegrationTest do
 
       assert json_response(response, 200) == %{
                "data" => %{
-                 "vote" => 95
+                 "vote" => "95"
                }
              }
     end

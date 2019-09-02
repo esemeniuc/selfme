@@ -13,6 +13,7 @@ defmodule Selfme.Vote do
 
   @doc false
   def changeset(vote, attrs) do
+    IO.puts("RUNNNNINGGGGGG")
     vote
     |> cast(attrs, [:experiment_id, :user_id, :attractiveness, :fun])
     |> validate_required([:experiment_id, :user_id, :attractiveness, :fun])

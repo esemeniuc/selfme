@@ -49,3 +49,6 @@ Set up your migration
 
 After git fetch 
 `mix ecto.reset`
+
+To test
+`MIX_ENV=test mix ecto.reset && mix test`

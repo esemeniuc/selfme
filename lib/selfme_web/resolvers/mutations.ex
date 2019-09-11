@@ -30,18 +30,11 @@ defmodule SelfmeWeb.Resolvers.Mutations do
         %{token: token, experiment_id: experiment_id, attractiveness: attractiveness, fun: fun},
         _resolution
       ) do
-#    experiment_id = 3
     user_id = Selfme.Repo.one(from u in Selfme.User, select: u.id, where: u.token == ^token)
     experiment_user_id = Selfme.Repo.one(from e in Selfme.Experiment, select: e.user_id, where: e.id == ^experiment_id)
 #    if experiment_user_id == user_id do
 #      return {:error, "error: can't vote on your own experiment"}
 #    end
-    IO.inspect( %Selfme.Vote{
-      experiment_id: experiment_id,
-      user_id: user_id,
-      attractiveness: attractiveness,
-      fun: fun
-    })
     case Selfme.Repo.insert %Selfme.Vote{
       experiment_id: experiment_id,
       user_id: user_id,

@@ -66,7 +66,7 @@ defmodule SelfmeWeb.QueryIntegrationTest do
         }
       }
       """
-      variables = %{token: "poken"}
+      variables = %{token: "poken1"}
 
       response =
         build_conn()
@@ -80,13 +80,13 @@ defmodule SelfmeWeb.QueryIntegrationTest do
                {
                "attractiveness": {
                "dislikes": 1,
-               "likes": 3,
-               "mehs": 2
+               "likes": 0,
+               "mehs": 0
                },
                "fun": {
-               "dislikes": 4,
-               "likes": 6,
-               "mehs": 5
+               "dislikes": 0,
+               "likes": 1,
+               "mehs": 0
                }
                }
                ]

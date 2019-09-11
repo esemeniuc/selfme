@@ -23,7 +23,7 @@ defmodule SelfmeWeb.MutationIntegrationTest do
 
       assert json_response(response, 200) == %{
                "data" => %{
-                 "createExperiment" => "someimageid"
+                 "createExperiment" => "5"
                }
              }
     end

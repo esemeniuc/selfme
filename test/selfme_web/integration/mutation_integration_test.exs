@@ -30,7 +30,7 @@ defmodule SelfmeWeb.MutationIntegrationTest do
 
     test "work with voting on a experiment" do
       voteMutation = """
-      mutation($experimentId: ID!, $token: String!, $attractiveness: Rating!, $fun: Rating!) {
+      mutation($experimentId: String!, $token: String!, $attractiveness: Rating!, $fun: Rating!) {
       vote(experimentId: $experimentId,
       token: $token,
       attractiveness: $attractiveness,

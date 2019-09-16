@@ -102,7 +102,7 @@ defmodule SelfmeWeb.QueryIntegrationTest do
       getImage(experimentId: $experimentId, token: $token)
       }
       """
-      variables = %{experimentId: "magic", token: "poken"}
+      variables = %{experimentId: 1, token: "poken1"}
 
       response =
         build_conn()
@@ -112,7 +112,7 @@ defmodule SelfmeWeb.QueryIntegrationTest do
                """
                {
                "data": {
-               "getImage": "fakeImageConvertedToString"
+               "getImage": "ALICEIMG1"
                }
                }
                """

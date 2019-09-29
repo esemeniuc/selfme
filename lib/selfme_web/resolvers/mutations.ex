@@ -41,7 +41,6 @@ defmodule SelfmeWeb.Resolvers.Mutations do
       attractiveness: attractiveness,
       fun: fun
     })
-    require IEx; IEx.pry
     case Selfme.Repo.insert to_insert do
       {:ok, struct} -> {:ok, struct.id}
       {:error, changeset} -> {:error, "error voting on experiment"}

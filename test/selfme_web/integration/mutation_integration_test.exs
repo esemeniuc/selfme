@@ -51,7 +51,7 @@ defmodule SelfmeWeb.MutationIntegrationTest do
 
       assert json_response(response, 200) == %{
                "data" => %{
-                 "vote" => "95"
+                 "vote" => "7"
                }
              }
     end

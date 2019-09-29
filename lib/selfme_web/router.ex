@@ -8,8 +8,11 @@ defmodule SelfmeWeb.Router do
   scope "/api" do
     pipe_through :api
 
-    forward "/graphiql", Absinthe.Plug.GraphiQL,
-            schema: SelfmeWeb.Schema
+    forward "/graphiql",
+            Absinthe.Plug.GraphiQL,
+            schema: SelfmeWeb.Schema,
+            interface: :playground
+
 
     forward "/", Absinthe.Plug,
             schema: SelfmeWeb.Schema

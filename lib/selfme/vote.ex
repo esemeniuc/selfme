@@ -11,6 +11,11 @@ defmodule Selfme.Vote do
     timestamps()
   end
 
+  def parse(vote) do
+    changeset(%Selfme.Vote{}, Map.from_struct(vote))
+    |> apply_changes
+  end
+
   @doc false
   def changeset(vote, attrs) do
     IO.puts("RUNNNNINGGGGGG")

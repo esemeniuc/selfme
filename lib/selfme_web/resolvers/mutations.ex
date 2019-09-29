@@ -35,12 +35,14 @@ defmodule SelfmeWeb.Resolvers.Mutations do
 #    if experiment_user_id == user_id do
 #      return {:error, "error: can't vote on your own experiment"}
 #    end
-    case Selfme.Repo.insert %Selfme.Vote{
+    to_insert = Selfme.Vote.parse(%Selfme.Vote{
       experiment_id: experiment_id,
       user_id: user_id,
       attractiveness: attractiveness,
       fun: fun
-    } do
+    })
+    require IEx; IEx.pry
+    case Selfme.Repo.insert to_insert do
       {:ok, struct} -> {:ok, struct.id}
       {:error, changeset} -> {:error, "error voting on experiment"}
     end
